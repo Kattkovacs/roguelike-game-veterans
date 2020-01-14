@@ -18,7 +18,8 @@ def create_player():
     Returns:
     dictionary
     '''
-    pass
+    player = {PLAYER_ICON: (PLAYER_START_X, PLAYER_START_Y)}
+    return player
 
 
 def main():
