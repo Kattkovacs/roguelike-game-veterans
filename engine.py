@@ -15,45 +15,10 @@ def create_board(width, height):
     return board
 
 
-def put_player_on_board(board, player):
-    '''
-    Modifies the game board by placing the player icon at its coordinates.
-
-    Args:
-    list: The game board
-    dictionary: The player information containing the icon and coordinates
-
-    Returns:
-    Nothing
-    '''
-    row = player.get('coord_y')
-    col = player.get('coord_x')
-    board[row][col] = player['player_icon']
-
-
-# def check_if_wall(board, player, key):
-#     row = player.get('coord_y')
-#     col = player.get('coord_x')
-#     if key == 'w':
-#         row -= 1
-#     elif key == 's':
-#         row += 1
-#     elif key == 'a':
-#         col -= 1
-#     elif key == 'd':
-#         col += 1
-#     if board[row][col] == '#':
-#         return player['coord_y'], player['coord_x']
-#     else:
-#         return row, col
-
-
-# def refresh_player_coord(key, player, board):
-#     row, col = check_if_wall(board, player, key)
-#     player['coord_y'] = row
-#     player['coord_x'] = col
-#     return player
-
+def put_item_on_board(board, item):
+    row = item.get('coord_y')
+    col = item.get('coord_x')
+    board[row][col] = item['icon']
 
 
 def refresh_player_coord(key, player, board):
