@@ -18,7 +18,7 @@ def create_player():
     Returns:
     dictionary
     '''
-    player = {'@': [PLAYER_START_X, PLAYER_START_Y]}
+    player = {'player_icon': PLAYER_ICON, "coord_x" : PLAYER_START_X, "coord_y": PLAYER_START_Y}
     return player
 
 
@@ -31,7 +31,6 @@ def main():
     while is_running:
         engine.put_player_on_board(board, player)
         ui.display_board(board)
-
         key = util.key_pressed()
         if key == 'q':
             is_running = False

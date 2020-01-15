@@ -26,13 +26,39 @@ def put_player_on_board(board, player):
     Returns:
     Nothing
     '''
-    player_icon = ''.join(player)
-    row, col = player.get(player_icon)
-    board[row][col] = player_icon
+    row = player.get('coord_y')
+    col = player.get('coord_x')
+    board[row][col] = player['player_icon']
 
 
-def check_if_wall(board, player, key):
-    row, col = player['@']
+# def check_if_wall(board, player, key):
+#     row = player.get('coord_y')
+#     col = player.get('coord_x')
+#     if key == 'w':
+#         row -= 1
+#     elif key == 's':
+#         row += 1
+#     elif key == 'a':
+#         col -= 1
+#     elif key == 'd':
+#         col += 1
+#     if board[row][col] == '#':
+#         return player['coord_y'], player['coord_x']
+#     else:
+#         return row, col
+
+
+# def refresh_player_coord(key, player, board):
+#     row, col = check_if_wall(board, player, key)
+#     player['coord_y'] = row
+#     player['coord_x'] = col
+#     return player
+
+
+
+def refresh_player_coord(key, player, board):
+    row = player.get('coord_y')
+    col = player.get('coord_x')
     if key == 'w':
         row -= 1
     elif key == 's':
@@ -41,14 +67,13 @@ def check_if_wall(board, player, key):
         col -= 1
     elif key == 'd':
         col += 1
-    if board[row][col] == '#':
-        return player['@']
+    if check_if_wall(board, row, col):
+        pass
     else:
-        return row, col
+        player['coord_y'] = row
+        player['coord_x'] = col
+        return player
 
 
-def refresh_player_coord(key, player, board):
-    row, col = check_if_wall(board, player, key)
-    player['@'] = row, col
-
-    return player
+def check_if_wall(board, row, col):
+    return board[row][col] == '#'
