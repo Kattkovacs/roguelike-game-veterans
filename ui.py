@@ -12,8 +12,8 @@ def display_board(board):
             elif j == 0:
                 board[i][j] = '#'
             elif j == len(board[i]) - 1:
-                if i == 16:  # This will be the gate
-                    board[i][j] = ' '
+                if i == 16:  # This is the place of the gate
+                    board[i][j] = ' '  # This is the icon of the gate
                 else:
                     board[i][j] = '#'
             else:
