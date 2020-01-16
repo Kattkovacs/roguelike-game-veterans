@@ -1,17 +1,21 @@
-def create_board(width, height):
-    '''
-    Creates a new game board based on input parameters.
-
-    Args:
-    int: The width of the board
-    int: The height of the board
-
-    Returns:
-    list: Game board
-    '''
+def create_board(gate1, gate2=None, height=20, width=30, ):
+    wall = "#"
+    space = "."
+    gate = " "
+    gate1_x, gate1_y = gate1
+    if gate2 is not None:
+        gate2_x, gate2_y = gate2
     board = []
     for i in range(height):
-        board.append(list('.'*width))
+        row = []
+        for j in range(width):
+            if i == 0 or i == height - 1 or j == 0 or j == width - 1:
+                row.append(wall)            
+            else:
+                row.append(space)
+        board.append(row)
+    board[gate1_x][gate1_y] = gate
+    board[gate2_x][gate2_y] = gate
     return board
 
 
