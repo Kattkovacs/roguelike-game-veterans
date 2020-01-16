@@ -26,7 +26,6 @@ def create_player():
     Returns:
     dictionary
     '''
-    # I've modified the key 'player_icon' to 'icon' in order to use the same name in every dictionary
     player = {'icon': PLAYER_ICON, "coord_x" : PLAYER_START_X, "coord_y": PLAYER_START_Y,"name" : "Lord-el-Melloi", "race" : "Human", "health" : 100}
     return player
 
@@ -46,7 +45,7 @@ def main():
     weapon = create_weapon()
     monster = create_monster()
 
-    board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
+    board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))    
 
     util.clear_screen()
 
@@ -56,17 +55,17 @@ def main():
 
     is_running = True
     while is_running:
-        engine.put_item_on_board(board, player)
-        engine.put_item_on_board(board, weapon)
-        engine.put_item_on_board(board, monster)
-        ui.display_board(board)
+        engine.put_item_on_board(board1, player)
+        engine.put_item_on_board(board1, weapon)
+        engine.put_item_on_board(board1, monster)
+        ui.display_board(board1)
         ui.display_player_stats(player)
         key = util.key_pressed()
         if key == 'q':
             is_running = False
-        else:
-            engine.refresh_player_coord(key, player, board)
-            board = engine.create_board(BOARD_WIDTH, BOARD_HEIGHT)
+        else:          
+            engine.refresh_player_coord(key, player, board1)
+            board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))
         util.clear_screen()
 
 
