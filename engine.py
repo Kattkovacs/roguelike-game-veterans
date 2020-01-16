@@ -67,3 +67,17 @@ def get_player_stats(player):
         player["race"] = "Beastman"
         player["health"] = 150
     return player
+
+
+def check_collectible(player, player_inv, weapon):
+    player_coord_x = player["coord_x"]
+    player_coord_y = player["coord_y"]
+    weapon_coord_x = weapon["coord_x"]
+    weapon_coord_y = weapon["coord_y"]
+    if player_coord_x == weapon_coord_x and player_coord_y == weapon_coord_y:
+        if weapon["name"] not in player_inv.keys():
+            player_inv[weapon["name"]] = 1
+        else:
+            player_inv[weapon["name"]] += 1
+        weapon["icon"] = "."
+    return player_inv, weapon

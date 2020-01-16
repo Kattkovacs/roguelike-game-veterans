@@ -4,3 +4,7 @@ def display_board(board):
 
 def display_player_stats(player):
     print(player["name"] + "   " + "Race: " + player["race"] + "   Health: " + str(player["health"]))
+
+
+def display_inv(player_inv):
+    print("Your inventory: ", player_inv)

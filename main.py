@@ -1,6 +1,8 @@
 import util
 import engine
 import ui
+import time
+
 
 PLAYER_ICON = '@'
 PLAYER_START_X = 3
@@ -26,12 +28,13 @@ def create_player():
     Returns:
     dictionary
     '''
+    player_inv = {}
     player = {'icon': PLAYER_ICON, "coord_x" : PLAYER_START_X, "coord_y": PLAYER_START_Y,"name" : "Lord-el-Melloi", "race" : "Human", "health" : 100}
-    return player
+    return player, player_inv
 
 
 def create_weapon():
-    weapon = {'icon': WEAPON_ICON, "coord_x" : WEAPON_START_X, "coord_y": WEAPON_START_Y}
+    weapon = {'icon': WEAPON_ICON, "coord_x" : WEAPON_START_X, "coord_y": WEAPON_START_Y, "name": "Sword", "type" : "collectible"}
     return weapon
 
 
@@ -41,7 +44,7 @@ def create_monster():
 
 
 def main():
-    player = create_player()
+    player, player_inv = create_player()
     weapon = create_weapon()
     monster = create_monster()
 
@@ -63,9 +66,15 @@ def main():
         key = util.key_pressed()
         if key == 'q':
             is_running = False
-        else:          
+        elif key == 'I':
+            x= ""
+            while x == "":
+                ui.display_inv(player_inv)
+                x = util.key_pressed()        
+        else:
             engine.refresh_player_coord(key, player, board1)
             board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))
+            player_inv, weapon = engine.check_collectible(player, player_inv, weapon)
         util.clear_screen()
 
 
