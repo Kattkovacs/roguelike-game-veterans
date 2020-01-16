@@ -42,3 +42,24 @@ def refresh_player_coord(key, player, board):
 
 def check_if_wall(board, row, col):
     return board[row][col] == '#'
+
+
+def get_player_stats(player):
+    print("Welcome to the wonderful world of Ilhuan.")
+    name = input("Write down your name adventurer: ")
+    player["name"] = name
+    print("(1)Human\n(2)Elf\n(3)Halfling\n(4)Beastman")
+    race = input("Choose your race(1/2/3/4): ")
+    if race == "1":
+        player["race"] = "Human"
+        player["health"] = 100
+    elif race == "2":
+        player["race"] = "Elf"
+        player["health"] = 125
+    elif race == "3":
+        player["race"] = "Halfling"
+        player["health"] = 75
+    elif race == "4":
+        player["race"] = "Beastman"
+        player["health"] = 150
+    return player

@@ -19,3 +19,7 @@ def display_board(board):
             else:
                 board[i][j] = board[i][j]
         print(*board[i])
+
+
+def display_player_stats(player):
+    print(player["name"] + "   " + "Race: " + player["race"] + "   Health: " + str(player["health"]))
