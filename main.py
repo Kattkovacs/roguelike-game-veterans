@@ -58,9 +58,9 @@ def main():
 
     is_running = True
     while is_running:
-        engine.put_item_on_board(board1, player)
         engine.put_item_on_board(board1, weapon)
         engine.put_item_on_board(board1, monster)
+        engine.put_item_on_board(board1, player)
         ui.display_board(board1)
         ui.display_player_stats(player)
         key = util.key_pressed()

@@ -20,9 +20,12 @@ def create_board(gate1, gate2=None, height=20, width=30, ):
 
 
 def put_item_on_board(board, item):
-    row = item.get('coord_y')
-    col = item.get('coord_x')
-    board[row][col] = item['icon']
+    try:
+        row = item.get('coord_y')
+        col = item.get('coord_x')
+        board[row][col] = item['icon']
+    except:
+        pass
 
 
 def refresh_player_coord(key, player, board):
@@ -80,4 +83,6 @@ def check_collectible(player, player_inv, weapon):
         else:
             player_inv[weapon["name"]] += 1
         weapon["icon"] = "."
+        weapon["coord_y"] = None
+        weapon["coord_x"] = None
     return player_inv, weapon
