@@ -28,13 +28,18 @@ def create_player():
     Returns:
     dictionary
     '''
-    player_inv = {}
     player = {"icon": PLAYER_ICON, "name": "Lord-el-Melloi", "race": "Human", "health": 100, "coord_y": PLAYER_START_Y, "coord_x" : PLAYER_START_X}
-    return player, player_inv
+    return player
+
+
+def create_player_inventory():
+    player_inv = {'Sword': {'name': 'Sword', 'quantity': 1, 'hitting_power': 50}}
+    # {'Sword': {"name": "Sword", "quantity": 1, "hitting_power": 50}, food: {"name": "food", "quantity": 1; "health": 100}}
+    return player_inv
 
 
 def create_sword():
-    sword = {"type": "collectible", "name": "Sword", "icon": SWORD_ICON, "health": 50, "hitting_power": 50, "coord_y": SWORD_START_Y, "coord_x": SWORD_START_X}
+    sword = {"type": "item", "name": "Sword", "icon": SWORD_ICON, "health": 50, "hitting_power": 50, "coord_y": SWORD_START_Y, "coord_x": SWORD_START_X}
     return sword
 
 
@@ -43,38 +48,43 @@ def create_monster():
     return monster
 
 
+def collect_coordinates_who_is_alive(everyone_in_room1):
+    coordinates_who_is_alive = {}
+    for name in everyone_in_room1:
+        if name['health'] > 0:
+            coordinates_who_is_alive[name['icon']] = (name['coord_y'], name['coord_x'])
+    return coordinates_who_is_alive
+
+
 def main():
-    player, player_inv = create_player()
+    util.clear_screen()
+    player = create_player()
+    player_inv = create_player_inventory()
     sword = create_sword()
     monster = create_monster()
 
-    board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))
-
-    util.clear_screen()
-
     engine.get_player_stats(player)
-
     util.clear_screen()
 
     is_running = True
     while is_running:
-        engine.put_item_on_board(board1, sword)
-        engine.put_item_on_board(board1, monster)
-        engine.put_item_on_board(board1, player)
+        board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))
+        everyone_in_room1 = [sword, monster, player] # player should be the last one(!)
+        coordinates_who_is_alive = collect_coordinates_who_is_alive(everyone_in_room1)
+        print(coordinates_who_is_alive)
+        engine.put_everyone_on_board(board1, coordinates_who_is_alive)
         ui.display_board(board1)
         ui.display_player_stats(player)
         key = util.key_pressed()
         if key == 'q':
             is_running = False
         elif key == 'I':
-            x= ""
+            x = ""
             while x == "":
                 ui.display_inv(player_inv)
-                x = util.key_pressed()        
+                x = util.key_pressed()
         else:
-            engine.refresh_player_coord(key, player, board1)
-            board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))
-            player_inv, weapon = engine.check_collectible(player, player_inv, sword)
+            engine.refresh_player_coord(key, player, player_inv, board1, everyone_in_room1)
         util.clear_screen()
 
 
