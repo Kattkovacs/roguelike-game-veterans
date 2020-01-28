@@ -42,42 +42,37 @@ def refresh_player_coord(key, player, player_inv, board, everyone_in_room1):
     else:
         player['coord_y'] = row
         player['coord_x'] = col
-        searched_icon = board[row][col]
-        if check_what_is_it(searched_icon, everyone_in_room1) == 'item':
-            name_of_item = refresh_player_inventory(searched_icon, player_inv, everyone_in_room1)
-            collect_item(searched_icon, player, everyone_in_room1)
-            return player
+        if board[row][col] != '.':
+            creature = check_what_is_it(row, col, everyone_in_room1)
+            print('creature: ', creature)
+            if creature['type'] == 'item':
+                refresh_player_inventory(creature, player_inv)
+                collect_item(creature, player)
+                return player
 
 
 def check_if_wall(board, row, col):
     return board[row][col] == '#'
 
 
-def check_what_is_it(searched_icon, everyone_in_room1):
-    for element in everyone_in_room1:
-        if element['icon'] == searched_icon:
-            return element['type']
+def check_what_is_it(row, col, everyone_in_room1):
+    for creature in everyone_in_room1:
+        if creature['coord_y'] == row and creature['coord_x'] == col and creature != 'player':
+            return creature
 
 
-def refresh_player_inventory(searched_icon, player_inv, everyone_in_room1):
-    # If this would returns the name (name of dictionary), then the
-    # collect item function would use this name as arg
-    for name_of_item in everyone_in_room1:
-        if name_of_item['icon'] == searched_icon:
-            if name_of_item['name'] not in player_inv.keys():
-                player_inv[name_of_item['name']] = {'name': name_of_item['name'], 'quantity': 1, 'hitting_power': name_of_item['hitting_power']}
-            else:
-                player_inv[name_of_item['name']]['quantity'] += 1
-            print('name_of_item:', name_of_item)
-            return player_inv
+def refresh_player_inventory(creature, player_inv):
+    if creature['name'] not in player_inv.keys():
+        player_inv[creature['name']] = {'name': creature['name'], 'quantity': 1, 'hitting_power': creature['hitting_power']}
+    else:
+        player_inv[creature['name']]['quantity'] += 1
+        return player_inv
 
 
-def collect_item(searched_icon, player, everyone_in_room1):
-    for name in everyone_in_room1:
-        if name['icon'] == searched_icon:
-            player['health'] += name['health']
-            name['health'] = 0
-            return name
+def collect_item(creature, player):
+    player['health'] += creature['health']
+    creature['health'] = 0
+    return creature
 
 
 def get_player_stats(player):
