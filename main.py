@@ -28,13 +28,12 @@ def create_player():
     Returns:
     dictionary
     '''
-    player = {"icon": PLAYER_ICON, "name": "Lord-el-Melloi", "race": "Human", "health": 100, "coord_y": PLAYER_START_Y, "coord_x" : PLAYER_START_X}
+    player = {"icon": PLAYER_ICON, "name": "Lord-el-Melloi", "race": "Human", "health": 100, "hitting_power": 100, "coord_y": PLAYER_START_Y, "coord_x" : PLAYER_START_X}
     return player
 
 
 def create_player_inventory():
-    player_inv = {'Sword': {'name': 'Sword', 'quantity': 1, 'hitting_power': 50}}
-    # {'Sword': {"name": "Sword", "quantity": 1, "hitting_power": 50}, food: {"name": "food", "quantity": 1; "health": 100}}
+    player_inv = {'Sword': {'name': 'Sword', 'quantity': 1, 'hitting_power': 50}} # Turn back to empty(!)
     return player_inv
 
 
@@ -73,8 +72,8 @@ def main():
         coordinates_who_is_alive = collect_coordinates_who_is_alive(everyone_in_room1)
         print(coordinates_who_is_alive)
         engine.put_everyone_on_board(board1, coordinates_who_is_alive)
+        ui.display_player_info_and_control_info(player)
         ui.display_board(board1)
-        ui.display_player_stats(player)
         key = util.key_pressed()
         if key == 'q':
             is_running = False
