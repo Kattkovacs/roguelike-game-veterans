@@ -20,22 +20,6 @@ MONSTER_START_Y = 2
 BOARD_WIDTH = 30
 BOARD_HEIGHT = 20
 
-''' COLORS '''
-CBLINK = '\33[5m'
-CBOLD = '\33[1m'
-CYELLOW2 = '\33[93m'
-CRED2 = '\33[91m'
-CBLUE2 = '\33[94m'
-CGREEN2 = '\33[92m'
-CEND = '\33[0m'
-
-''' HEALTH PROPERTIES '''
-HEALTH = "+"
-HEALTH_HIGH = f"{CGREEN2}{HEALTH}{CEND}"
-HEALTH_MIDDLE = f"{CYELLOW2}{HEALTH}{CEND}"
-HEALTH_LOW = f"{CRED2}{HEALTH}{CEND}"
-HEALTH_UNIT = 20
-
 
 def create_player():
     '''
@@ -45,7 +29,7 @@ def create_player():
     Returns:
     dictionary
     '''
-    player = {"icon": PLAYER_ICON, "name": "Lord-el-Melloi", "race": "Human", "health": 100, "hitting_power": 100, "coord_y": PLAYER_START_Y, "coord_x" : PLAYER_START_X}
+    player = {"icon": PLAYER_ICON, "name": "Lord-el-Melloi", "race": "Human", "health": 400, "actual_health": 0, "hitting_power": 20, "coord_y": PLAYER_START_Y, "coord_x" : PLAYER_START_X}
     return player
 
 
@@ -55,12 +39,12 @@ def create_player_inventory():
 
 
 def create_sword():
-    sword = {"type": "item", "name": "Sword", "icon": SWORD_ICON, "health": 50, "hitting_power": 50, "coord_y": SWORD_START_Y, "coord_x": SWORD_START_X}
+    sword = {"type": "item", "name": "Sword", "icon": SWORD_ICON, "health": 50, "hitting_power": 10, "coord_y": SWORD_START_Y, "coord_x": SWORD_START_X}
     return sword
 
 
 def create_monster():
-    monster = {"type": "enemy", "name": "Monster", "icon": MONSTER_ICON, "health": 150, "hitting_power": 100, "coord_y": MONSTER_START_Y, "coord_x": MONSTER_START_X}
+    monster = {"type": "enemy", "name": "Monster", "icon": MONSTER_ICON, "health": 300, "actual_health": 0, "hitting_power": 10, "coord_y": MONSTER_START_Y, "coord_x": MONSTER_START_X}
     return monster
 
 
@@ -87,7 +71,7 @@ def main():
         board1 = engine.create_board(gate1=(16, 29), gate2=(16, 0))
         everyone_in_room1 = [sword, monster, player] # player should be the last one(!)
         coordinates_who_is_alive = collect_coordinates_who_is_alive(everyone_in_room1)
-        print(coordinates_who_is_alive)
+        # print(coordinates_who_is_alive) # This line is for test phase(!)
         engine.put_everyone_on_board(board1, coordinates_who_is_alive)
         ui.display_player_info_and_control_info(player)
         ui.display_board(board1)
